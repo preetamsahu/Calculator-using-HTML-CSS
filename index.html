@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Preetam's Calculator</title>
+    <style>
+      * {
+        background-color: rgb(45, 45, 45);
+        color: white;
+        margin: 0px;
+        padding: 0px;
+      }
+      .heading {
+        text-align: center;
+        margin: 34px;
+        color: #6bff00;
+        text-shadow: -9px 7px 4px black;
+      }
+      .container {
+        display: grid;
+        border: 2px solid black;
+        width: 377px;
+        height: 534px;
+        margin: 12px auto;
+        align-items: center;
+        border-radius: 12px;
+        box-shadow: 0px 0px 20px 0px black;
+      }
+      .gridcontainer {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-gap: 2.5rem;
+        justify-items: end;
+      }
+      .item {
+        display: flex;
+        width: 60px;
+        height: 60px;
+        border: 2px solid #323030;
+        justify-content: center;
+        align-items: center;
+        border-radius: 46%;
+        box-shadow: -6px -3px 6px 0px #000000;
+        font-size: 17px;
+        font-weight: 800;
+      }
+      .item:hover {
+        cursor: pointer;
+        background-color: #3132328d;
+        font-size: 28px;
+      }
+      .inputnumber {
+        height: 55px;
+        /* row-gap: 12px; */
+        border: none;
+        padding-top: 23px;
+        /* background-color: #000000; */
+        font-size: 24px;
+        font-weight: 340;
+        border-radius: 17px;
+      }
+      @media (max-width: 461px) {
+      }
+    </style>
+  </head>
+  <body>
+    <h1 class="heading">Your Calculator</h1>
+    <div class="container">
+      <div id="screen" class="inputnumber">0</div>
+      <div class="gridcontainer">
+        <button
+          onclick="appendCharacter('AC')"
+          class="item"
+          style="color: rgb(147, 230, 13)"
+        >
+          AC
+        </button>
+        <button
+          onclick="appendCharacter('DE')"
+          class="item"
+          style="color: rgb(147, 230, 13)"
+        >
+          DE
+        </button>
+        <button onclick="appendCharacter('%')" class="item">%</button>
+        <button onclick="appendCharacter('/')" class="item">/</button>
+        <button onclick="appendCharacter('7')" class="item">7</button>
+        <button onclick="appendCharacter('8')" class="item">8</button>
+        <button onclick="appendCharacter('9')" class="item">9</button>
+        <button onclick="appendCharacter('*')" class="item">*</button>
+        <button onclick="appendCharacter('4')" class="item">4</button>
+        <button onclick="appendCharacter('5')" class="item">5</button>
+        <button onclick="appendCharacter('6')" class="item">6</button>
+        <button onclick="appendCharacter('-')" class="item">-</button>
+        <button onclick="appendCharacter('1')" class="item">1</button>
+        <button onclick="appendCharacter('2')" class="item">2</button>
+        <button onclick="appendCharacter('3')" class="item">3</button>
+        <button onclick="appendCharacter('+')" class="item">+</button>
+        <button onclick="appendCharacter('00')" class="item">00</button>
+        <button onclick="appendCharacter('0')" class="item">0</button>
+        <button onclick="appendCharacter('.')" class="item">.</button>
+        <button
+          onclick="appendCharacter('=')"
+          class="item"
+          style="background-color: rgb(147, 230, 13); color: #000000"
+        >
+          =
+        </button>
+      </div>
+    </div>
+    <h2 id="mainHeading" class="heading">-------------by Preetam Sahu-----------</h2>
+
+    <script>
+      function appendCharacter(char) {
+        let screentext = document.getElementById("screen");
+        if (char === "AC") {
+          screentext.textContent = "";
+        } else if (char == "DE") {
+          screentext.textContent = screentext.textContent.slice(0, -1);
+        } else if (char === "=") {
+          calculate();
+        } else {
+          if (
+            screentext.textContent == "0" ||
+            screentext.textContent == "Infinity" ||
+            screentext.textContent == "Error"
+          ) {
+            screentext.textContent = char;
+          } else {
+            screentext.textContent += char;
+          }
+        }
+      }
+
+      function backspace() {
+        let screentext = document.getElementById("screen");
+        screentext.textContent = screentext.textContent.slice(0, -1);
+      }
+
+      function calculate() {
+        let screentext = document.getElementById("screen");
+        try {
+          const result = eval(screentext.textContent);
+          screentext.textContent = result.toString();
+        } catch (error) {
+          screentext.textContent = "Error";
+        }
+      }
+      // Check screen size and update h1 text accordingly
+      function updateHeadingText() {
+        var h1Element = document.getElementById("mainHeading");
+        if (window.innerWidth <=461 ) {
+          h1Element.textContent = "--by Preetam Sahu";
+        } else {
+          h1Element.textContent = "-------------by Preetam Sahu-----------";
+        }
+      }
+
+      // Initial check on page load
+      updateHeadingText();
+
+      // Update the text on window resize
+      window.addEventListener("resize", updateHeadingText);
+    </script>
+  </body>
+</html>
